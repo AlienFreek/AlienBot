@@ -1,3 +1,3 @@
 # AlienBot
-Personal discord bot im making for fun
+Personal discord bot im making for fun.  
 First JS project.
