@@ -1,4 +1,4 @@
 config.json
 node_modules
-.idea
+/.idea
 deploy-commands.js
