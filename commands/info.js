@@ -6,9 +6,8 @@ module.exports = {
         .setName('info')
         .setDescription('Provide bot stats and information'),
     async execute(interaction) {
-        const activeGuilds = client.guilds.cache.size
         await interaction.reply('Developed by <@371639278104739841>\n' +
-            `Currently active in ${activeGuilds} server(s)\n` +
+            `Currently active in ${client.guilds.cache.size} server(s)\n` +
             `This bot is open source! https://github.com/AlienFreek/AlienBot`
         );
     },
