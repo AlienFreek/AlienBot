@@ -1,6 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
 const backup = require('discord-backup');
-const wait = require('node:timers/promises').setTimeout;
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -8,10 +7,8 @@ module.exports = {
         .setDescription('Creates a new backup'),
     async execute(interaction) {
         if(interaction.member.permissionsIn(interaction.channel).has('8')){
-
             //Backup can take a few seconds in large servers, must deferReply until the backup is complete
             await interaction.deferReply();
-            await wait(10000)
 
             await backup.create(interaction.guild, {
                 maxMessagesPerChannel: Number.MAX_SAFE_INTEGER,
