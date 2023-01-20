@@ -8,7 +8,7 @@ module.exports = {
     async execute(interaction) {
         await interaction.reply('Developed by <@371639278104739841>\n' +
             `Currently active in ${client.guilds.cache.size} server(s)\n` +
-            `This bot is open source! https://github.com/AlienFreek/AlienBot`
+            `This bot is open source! <https://github.com/AlienFreek/AlienBot>`
         );
     },
 };
