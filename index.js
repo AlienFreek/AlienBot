@@ -3,10 +3,23 @@ const { token }  = require('./config.json');
 const fs = require('node:fs');
 const path = require('node:path');
 
+
+//Create and export audio player
+const { createAudioPlayer, NoSubscriberBehavior} = require('@discordjs/voice');
+
+const player = createAudioPlayer({
+  behaviors: {
+    noSubscriber: NoSubscriberBehavior.Play,
+  },
+});
+module.exports = { player };
+
+
 //TODO: Clean intents, currently has all intents
 const client = new Client({ intents: 3276799 });
 module.exports = { client };
 
+//Gets all available commands
 client.commands = new Collection();
 const commandsPath = path.join(__dirname, 'commands');
 const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
@@ -18,6 +31,7 @@ for (const file of commandFiles){
   client.commands.set(command.data.name, command);
 }
 
+//Gets all events
 const eventsPath = path.join(__dirname, 'events');
 const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith('.js'));
 
@@ -31,9 +45,8 @@ for (const file of eventFiles) {
   }
 }
 
-//client.on('messageCreate', message => {
-//})
 
+//Check if command is valid and execute
 client.on('interactionCreate', async interaction => {
   try {
     await client.commands.get(interaction.commandName).execute(interaction);
@@ -43,4 +56,5 @@ client.on('interactionCreate', async interaction => {
   }
 });
 
+//Authorize discord API
 void client.login(token);
