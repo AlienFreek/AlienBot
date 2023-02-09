@@ -56,5 +56,13 @@ client.on('interactionCreate', async interaction => {
   }
 });
 
+
+//debug block for stopping the bot from inside discord
+client.on('messageCreate', async message =>{
+  if(message.content === 'stop' && message.member.user.id === '371639278104739841'){
+    client.destroy();
+  }
+})
+
 //Authorize discord API
 void client.login(token);
