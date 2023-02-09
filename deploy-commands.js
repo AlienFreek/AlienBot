@@ -1,3 +1,12 @@
+/*
+SCRIPT PROVIDED BY THE DISCORD.JS TEAM
+Updates the bots available commands on discord's end (local automatically updates on launch)
+
+For some reason, attempting to run this script while a command includes a variable from index.js
+results in an error. Instead of figuring out the error, I just comment out the require(index.js)
+for each command when re-deploying.
+ */
+
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord.js');
 const { token, clientId } = require('./config.json');
