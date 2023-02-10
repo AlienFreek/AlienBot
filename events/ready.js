@@ -3,10 +3,13 @@ module.exports = {
     name: 'ready',
     once: true,
     execute(client) {
-        console.log(`Ready! Logged in as ${client.user.tag}`);
         client.user.setPresence({
-            activities: [{ name: `/info`, type: ActivityType.Playing }],
-            status: 'online',
+            activities: [{
+                "name": "/info",
+                "type": ActivityType.Playing,
+            }],
+            status: 'dnd',
         });
+        console.log(`Ready! Logged in as ${client.user.tag}`);
     },
 };
