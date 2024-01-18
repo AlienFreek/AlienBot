@@ -45,7 +45,8 @@ module.exports = {
                 clearGuildBeforeRestore: true,
                 maxMessagesPerChannel: Number.MAX_SAFE_INTEGER
             }).then(() => {
-                //TODO: add dm to user notifying that the backup was loaded successfully
+                //DM user who started backup upon completion. Also output to console
+                interaction.member.user.send('Loaded backup in server "'+interaction.guild.name+'"').catch(console.error)
                 console.log(`Loaded backup ${id} on guild ${interaction.guildId}`);
             })
 
