@@ -2,9 +2,6 @@ const { SlashCommandBuilder } = require('discord.js');
 const { createAudioPlayer, NoSubscriberBehavior } = require('@discordjs/voice');
 
 
-
-
-
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('stop')
@@ -16,6 +13,7 @@ module.exports = {
 
         ),
     async execute(interaction) {
+
 
 
     },

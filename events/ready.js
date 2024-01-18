@@ -8,7 +8,7 @@ module.exports = {
                 "name": "/info",
                 "type": ActivityType.Playing,
             }],
-            status: 'dnd',
+            status: 'online',
         });
         console.log(`Ready! Logged in as ${client.user.tag}`);
     },

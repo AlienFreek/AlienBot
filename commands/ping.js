@@ -5,6 +5,8 @@ module.exports = {
         .setName('ping')
         .setDescription('Replies with Pong!'),
     async execute(interaction) {
-        await interaction.reply('Pong!');
+        //testing ability to send DMs
+        interaction.member.user.send('d').catch(console.error)
+        interaction.reply('pong')
     },
 };
