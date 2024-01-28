@@ -12,7 +12,7 @@ module.exports = {
             return;
         }
         //Backup can take a while in large servers, must deferReply() until the backup is complete
-        await interaction.deferReply();
+        await interaction.deferReply({ ephemeral: true });
 
         await backup.create(interaction.guild, {
             maxMessagesPerChannel: Number.MAX_SAFE_INTEGER,

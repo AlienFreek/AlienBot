@@ -29,7 +29,9 @@ module.exports = {
         backup.fetch(id).then(backupInfos => { //If backup exists then =>
             //Check if specified backup belongs to the server the command was ran from
             if(interaction.guildId !== backupInfos.data.guildID) {
-                interaction.reply(`This backup does not belong to this server!`);
+                interaction.reply({
+                    content:`This backup does not belong to this server!`,
+                    ephemeral: true});
                 return;
             }
 

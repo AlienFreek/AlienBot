@@ -9,14 +9,16 @@ module.exports = {
         if(interaction.member.permissionsIn(interaction.channel).has('8')){
 
             backup.list().then((backups) => {
-                interaction.reply(
-                    `**Available backups:**\n`+
-                    `\`${backups.join('\n')}\``)
-            }
-            )
-
+                interaction.reply({
+                    content: `**Available backups:**\n`+ `\`${backups.join('\n')}\``,
+                    ephemeral: true
+                })
+            })
         }else{
-            await interaction.reply('You must have administrator permissions to run this command.');
+            await interaction.reply({
+                content: 'You must have administrator permissions to run this command.',
+                ephemeral: true
+            })
         }
     },
 };

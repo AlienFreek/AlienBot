@@ -27,43 +27,58 @@ module.exports = {
         let userFile = interaction.options.getString('file')
         let userExtension = userFile.slice(-4)
 
-        //If invalid file extension, elseif file cant be found, else if both are valid
+        //If invalid file extension, elseif file cant be found
         if (extensions.indexOf(userExtension) === -1){
-            interaction.reply('Invalid file extension.')
-        } else if (!existsSync('./audiofiles/' + userFile)){
-            interaction.reply('File not found.')
-        } else{
-            await interaction.reply('Success! file found and validated')
-
-            //Make a clean path for redundancy
-            let fullPath = join(__dirname, '..', 'audiofiles', userFile)
-
-            //TODO: Find a solution to get file length of all supported formats.
-            //Currently only supports .mp3 files.
-            //Duration set to 5 minutes by default
-            if (userExtension === '.mp3'){
-                mp3Duration(fullPath, function (err, duration) {
-                    fileDuration = Math.ceil(duration)+'_000';
-                });
-            }
-
-            let resource = createAudioResource(fullPath);
-            const player = createAudioPlayer();
-            player.play(resource);
-
-            const connection = joinVoiceChannel({
-                channelId: interaction.member.voice.channelId,
-                guildId: interaction.guildId,
-                adapterCreator: interaction.channel.guild.voiceAdapterCreator,
+            interaction.reply({
+                content: 'Invalid file extension.',
+                ephemeral: true
             });
-            const subscription = connection.subscribe(player);
-
-            connection.on(VoiceConnectionStatus.Ready, () => {
-                console.log('Connection success. Playing file: '+ fullPath);
-            });
-
-            //Destroy connection and leave voice channel upon file completion
-            setTimeout(()=> connection.destroy(), fileDuration);
+            return;
         }
+        else if (!existsSync('./audiofiles/' + userFile)){
+            interaction.reply({
+                content: 'File not found.',
+                ephemeral: true
+            });
+            return;
+        }
+
+        await interaction.reply({
+            content:'Playing'+ interaction.options.getString('file') + ' now.',
+            ephemeral: true
+        });
+
+        //Make a clean path to reduce redundancy
+        let fullPath = join(__dirname, '..', 'audiofiles', userFile)
+
+        /*
+        Set timeout for the voice subscription to the length of the current file
+        TODO: Find a solution to get file length of all supported formats.
+        Currently only supports .mp3 files.
+        Duration set to 5 minutes by default
+        */
+        if (userExtension === '.mp3'){
+            mp3Duration(fullPath, function (err, duration) {
+                fileDuration = Math.ceil(duration)+'_000';
+            });
+        }
+
+        let resource = createAudioResource(fullPath);
+        const player = createAudioPlayer();
+        player.play(resource);
+
+        const connection = joinVoiceChannel({
+            channelId: interaction.member.voice.channelId,
+            guildId: interaction.guildId,
+            adapterCreator: interaction.channel.guild.voiceAdapterCreator,
+        });
+        connection.subscribe(player);
+
+        connection.on(VoiceConnectionStatus.Ready, () => {
+            console.log('Connection success. Playing file: '+ fullPath);
+        });
+
+        //Destroy connection and leave voice channel upon file completion
+        setTimeout(()=> connection.destroy(), fileDuration);
     },
 }
